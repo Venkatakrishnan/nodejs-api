@@ -7,11 +7,11 @@
     "server": "cross-env DEBUG=express*,app* ./node_modules/.bin/babel-node.cmd App.js",
     "startnotest": "cross-env DEBUG=express*,app* APP_NAME=app:art:api babel-watch App.js",
     "start": "cross-env DEBUG=express*,app* APP_NAME=app:art:api babel-watch App.js",
-    "gherkin-babel": "cross-env DEBUG=test:*,app:* cucumber-js --compiler=js:babel-polyfill --compiler=js:babel-core/register ./test",
-    "gherkin-feature-babel": "cross-env DEBUG=test:*,app:* cucumber-js --compiler=js:babel-polyfill --compiler=js:babel-core/register",
+    "gherkin-babel": "cross-env DEBUG=test:*,app:* cucumber-js --compiler=js:babel-core --compiler=js:babel-core/register ./test",
+    "gherkin-feature-babel": "cross-env DEBUG=test:*,app:* cucumber-js --compiler=js:babel-core --compiler=js:babel-core/register",
     "test": "npm run gherkin-babel",
     "prestart": "npm run test",
-    "build": "npm install && babel ./ -d ./dist"
+    "build": "npm install rimraf -g && npm install && rimraf ./dist && babel ./ -d ./dist --ignore node_modules/**"
   },
   "repository": {
     "type": "git",

@@ -28,7 +28,6 @@ log('api starting up...')
  * @param  {OBJECT} err - The error object reported by node process
  */
 process.on('unhandledRejection', (err)=>{
-    disposeDbPool()
     error(`unhandled-rejection: ${err}`)
     process.exit(1)
 })

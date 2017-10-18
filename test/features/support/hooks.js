@@ -1,11 +1,11 @@
 import {error, log} from '../../../shared/logger';
-import _ from 'lodash';
+import app from '../../../App';
 
 let state = {};
+
 export default () => {
     this.BeforeFeatures(() => {
-        log('hook function: before-features...')
-        require('../../../App').default
+        log('hook function: before-features...')        
     })
     this.Before(async (scenario) => {
             try {
