@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/Venkatakrishnan/art-api#readme",
   "dependencies": {
-    "axios": "^0.16.2",
+    "axios": "^0.18.1",
     "body-parser": "^1.18.2",
     "compression": "^1.7.1",
     "config": "^1.26.2",
