@@ -1,0 +1,7 @@
+FROM node:alpine
+
+ADD build /app
+ENV NODE_CONFIG_DIR /app/config
+WORKDIR /app
+ENTRYPOINT ["env", "DEBUG=app:*", "node"]
+CMD ["dist/app.server.js"]
