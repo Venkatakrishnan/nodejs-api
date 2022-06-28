@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-api-deployment
+  namespace: venky
+  labels:
+    app: nodejs-api-app
+spec:
+  selector:
+    matchLabels:
+      octopusexport: OctopusExport
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: api
+        octopusexport: OctopusExport
+    spec:
+      hostNetwork: false
+      containers:
+        - name: nodejs-api
+          image: localhost:5000/nodejs-api
+          resources:
+            limits:
+              cpu: 50m
+              memory: 100Mi
+            requests:
+              cpu: 25m
+              memory: 10Mi
+          ports:
+            - name: nodejs-api
+              containerPort: 3001
+              protocol: TCP
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%

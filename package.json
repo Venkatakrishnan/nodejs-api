@@ -5,13 +5,16 @@
   "main": "App.js",
   "scripts": {
     "server": "cross-env DEBUG=express*,app* ./node_modules/.bin/babel-node.cmd App.js",
-    "startnotest": "cross-env DEBUG=express*,app* APP_NAME=app:art:api babel-watch App.js",
+    "startnotest": "cross-env DEBUG=express*,app* APP_NAME=app:art:api babel-watch src/App.js",
     "start": "cross-env DEBUG=express*,app* APP_NAME=app:art:api babel-watch App.js",
     "gherkin-babel": "cross-env DEBUG=test:*,app:* cucumber-js --compiler=js:babel-core --compiler=js:babel-core/register ./test",
     "gherkin-feature-babel": "cross-env DEBUG=test:*,app:* cucumber-js --compiler=js:babel-core --compiler=js:babel-core/register",
     "test": "npm run gherkin-babel",
     "prestart": "npm run test",
-    "build": "npm install rimraf -g && npm install && rimraf ./dist && babel ./ -d ./dist --ignore node_modules/**"
+    "build": "npm install rimraf -g && rimraf ./build && md build && xcopy /E /H /C /I config build\\config && xcopy /E /H /C /I db build\\db && copy package.json build && cd build && npm install --production && cd .. && babel ./src -d ./build/dist --ignore node_modules/**",
+    "prebuild-docker": "npm run build",
+    "build-docker": "docker build -f docker/dockerfile -t venky/nodejs-api .",
+    "push-docker": "npm run build-docker && docker image tag venky/nodejs-api localhost:5000/nodejs-api && docker push localhost:5000/nodejs-api"
   },
   "repository": {
     "type": "git",
@@ -28,18 +31,18 @@
   "homepage": "https://github.com/Venkatakrishnan/art-api#readme",
   "dependencies": {
     "axios": "^0.16.2",
-    "body-parser": "^1.18.2",
-    "compression": "^1.7.1",
-    "config": "^1.26.2",
-    "cors": "^2.8.4",
+    "body-parser": "^1.20.0",
+    "compression": "^1.7.4",
+    "config": "^1.31.0",
+    "cors": "^2.8.5",
     "debug": "^3.1.0",
-    "express": "^4.16.2",
+    "express": "^4.18.1",
     "helpr": "^1.0.0",
-    "lodash": "^4.17.4",
-    "morgan": "^1.9.0",
+    "lodash": "^4.17.21",
+    "morgan": "^1.10.0",
     "path": "^0.12.7",
-    "pg": "^7.3.0",
-    "swagger-jsdoc": "^1.9.7"
+    "pg": "^7.18.2",
+    "swagger-jsdoc": "^1.10.3"
   },
   "devDependencies": {
     "assert": "^1.4.1",
